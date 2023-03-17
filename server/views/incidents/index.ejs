@@ -1,0 +1,71 @@
+<% include ../partials/header.ejs %>
+
+<!-- MAIN CONTENT -->
+<div class="container">
+  <div class="row">
+    <h3>Incident List</h3>
+    <!-- ------------------------ -->
+    <!-- ADD BUTTON -->
+    <!-- ------------------------ -->
+    <a href="incidents/add" class="btn btn-primary"
+      ><i class="fa fa-plus"></i> Add an incident</a
+    >
+    <br />
+    <div class="table-responsive">
+      <table class="table table-bordered table-striped table-hover">
+        <thead>
+          <tr>
+            <th>Title</th>
+            <th class="text-center">Description</th>
+            <th class="text-center">Date</th>
+            <th class="text-center">Status</th>
+            <th class="text-center">Severity</th>
+            <th class="text-center">Reporter</th>
+            <th class="text-center">Area</th>
+            <th class="text-center">Location</th>
+            <th class="text-center"></th>
+            <th class="text-center"></th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- Template Row -->
+          <% for (let count = 0; count < incidents.length; count++) { %>
+          <tr>
+            <td><%= incidents[count].Title %></td>
+            <td class="text-center"><%= incidents[count].Description %></td>
+            <td class="text-center">
+              <%= new Date(incidents[count].Date).toLocaleDateString('en-CA') %>
+            </td>
+            <td class="text-center"><%= incidents[count].Status %></td>
+            <td class="text-center"><%= incidents[count].Severity %></td>
+            <td class="text-center"><%= incidents[count].Reporter %></td>
+            <td class="text-center"><%= incidents[count].Area %></td>
+            <td class="text-center"><%= incidents[count].Location %></td>
+
+            <td class="text-center">
+              <a
+                href="/incidents/<%=incidents[count]._id%>"
+                class="btn btn-primary"
+                ><i class="fas fa-pencil-alt"></i>Edit</a
+              >
+            </td>
+
+            <td class="text-center">
+              <a
+                href="/incidents/delete/<%=incidents[count]._id%>"
+                class="btn btn-danger"
+                ><i class="fas fa-trash-alt"></i>Delete</a
+              >
+            </td>
+          </tr>
+          <% } %>
+        </tbody>
+      </table>
+    </div>
+    <div class="col-md-offset-1 col-md-10 text-center">
+      <ul class="pagination pagination-lg pager" id="myPager"></ul>
+    </div>
+  </div>
+</div>
+
+<% include ../partials/footer.ejs %>

@@ -1,57 +1,59 @@
 // modules required for routing
-let express = require('express');
-let router = express.Router();
-let mongoose = require('mongoose');
+const express = require('express');
+const router = express.Router();
+const Incident = require('../models/incidents');
+const { sortIncidents } = require('../helper/incidents-helper');
 
-// define the book model
-let Book = require('../models/books');
-
-/* GET books List page. READ */
+/* GET incidents List page. READ */
 router.get('/', (req, res, next) => {
-  // find all books in the books collection
-  Book.find((err, books) => {
+  // find all incidents in the incidents collection
+  Incident.find((err, incidents) => {
     if (err) {
       return console.error(err);
     }
     else {
-      res.render('books/index', {
-        title: 'Books',
-        books: books
+      res.render('incidents/index', {
+        title: 'Incidents',
+        incidents: sortIncidents(incidents)
       });
     }
   });
 
 });
 
-//  GET the Book Details page in order to add a new Book
+//  GET the Incident Details page in order to add a new Incident
 router.get('/add', (req, res, next) => {
-  res.render('books/details', {
-    title: 'Add Book',
-    book: {}
+  res.render('incidents/details', {
+    title: 'Add Incident',
+    incident: {}
   });
 });
 
-// POST process the Book Details page and create a new Book - CREATE
+// POST process the Incident Details page and create a new Incident - CREATE
 router.post('/add', (req, res, next) => {
-  let newBook = Book({
+  let newIncident = Incident({
     "Title": req.body.title,
-    "Price": req.body.price,
-    "Author": req.body.author,
-    "Genre": req.body.genre,
+    "Description": req.body.description,
+    "Date": req.body.date,
+    "Status": 'Pending',
+    "Severity": req.body.severity,
+    "Reporter": req.body.reporter,
+    "Area": req.body.area,
+    "Location": req.body.location,
   });
 
-  Book.create(newBook, (err, book) => {
+  Incident.create(newIncident, (err, incident) => {
     if (err) {
       console.log(err);
       res.end(err);
     }
     else {
-      res.redirect('/books');
+      res.redirect('/incidents');
     }
   });
 });
 
-// GET the Book Details page in order to edit an existing Book
+// GET the Incident Details page in order to edit an existing Incident
 router.get('/:id', (req, res, next) => {
   let id = req.params.id;
   Book.findById(id, (err, bookToEdit) => {
@@ -93,15 +95,13 @@ router.post('/:id', (req, res, next) => {
 // GET - process the delete by user id
 router.get('/delete/:id', (req, res, next) => {
   let id = req.params.id;
-  Book.remove({_id:id},(err)=>{
-    if(err)
-    {
-        console.log(err);
-        res.end(err);
+  Book.remove({ _id: id }, (err) => {
+    if (err) {
+      console.log(err);
+      res.end(err);
     }
-    else
-    {
-        res.redirect('/books');
+    else {
+      res.redirect('/books');
     }
   });
 });

@@ -3,7 +3,7 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
-    "start": "node server.js"
+    "start": "nodemon server.js"
   },
   "dependencies": {
     "@fortawesome/fontawesome-free": "^5.14.0",
@@ -28,7 +28,7 @@
     "node": "^10.15.0",
     "npm": "^6.0.0"
   },
-  "description": "## Welcome to the MidTerm Project - the Favourite Book List App",
+  "description": "## Welcome to the Group 3 Saf1rst Project - Incident Management",
   "main": "server.js",
   "devDependencies": {
     "@types/body-parser": "^1.19.0",
