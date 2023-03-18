@@ -1,15 +1,29 @@
 <% include ../partials/header.ejs %>
 
     <!-- MAIN CONTENT -->
-    <div class="container">
+    <div style="background-color:burlywood;min-height: 400px;">
       <div class="row">
-        <div class="col-md-offset-3 col-md-6">
-          <h1><%= title %></h1>
-            <h2>Welcome to <%= title %></h2>
-            <h3>Test Auto Deployment Azure 2</h3>
+        <div class="col-md-6">
+          <div class="c-hero__container v--horizontal">
+            <div class="c-hero__copy">
+              <h1 class="o-hero__headline--lg u-text--white u-margin-bottom--24">Report a serious Incident</h1>
+              <h2 class="o-hero__headline--copy u-text--white u-margin-bottom--24">Please report all kinds of incidents that happen. We will take care of solving it as soon as possible and in the best way </h2>
+              <br>
+              <a class="btn my-btn" href="/incidents/add">Register Incident</a> 
+              
+              <br>
+              <br>
+            
+            </div>
+              
+          </div>
+        </div>
+        <div class="col-md-6">
+          <img class="" src="server/views/Assets/images/logo.png" style="max-height: 500px; max-width: 500px;">
         </div>
       </div>
     </div>
+        
 
 <% include ../partials/footer.ejs %>
 
