@@ -56,14 +56,14 @@ router.post('/add', (req, res, next) => {
 // GET the Incident Details page in order to edit an existing Incident
 router.get('/:id', (req, res, next) => {
   let id = req.params.id;
-  Book.findById(id, (err, bookToEdit) => {
+  Incident.findById(id, (err, incidentToEdit) => {
     if (err) {
       console.log(err);
       res.end(err);
     }
     else {
-      res.render('books/details', {
-        title: 'Edit Book', book: bookToEdit,
+      res.render('incidents/details', {
+        title: 'Edit Incidents', incident: incidentToEdit,
       });
     }
   });
@@ -72,21 +72,25 @@ router.get('/:id', (req, res, next) => {
 // POST - process the information passed from the details form and update the document
 router.post('/:id', (req, res, next) => {
   let id = req.params.id;
-  let updatedBook = Book({
+  let updatedIncident = Incident({
     "_id": id,
     "Title": req.body.title,
-    "Price": req.body.price,
-    "Author": req.body.author,
-    "Genre": req.body.genre,
+    "Description": req.body.description,
+    "Date": req.body.date,
+    "Status": 'Pending',
+    "Severity": req.body.severity,
+    "Reporter": req.body.reporter,
+    "Area": req.body.area,
+    "Location": req.body.location,
   });
 
-  Book.updateOne({ _id: id }, updatedBook, (err) => {
+  Incident.updateOne({ _id: id }, updatedIncident, (err) => {
     if (err) {
       console.log(err);
       res.end(err);
     }
     else {
-      res.redirect('/books');
+      res.redirect('/incidents');
     }
   });
 
@@ -95,13 +99,13 @@ router.post('/:id', (req, res, next) => {
 // GET - process the delete by user id
 router.get('/delete/:id', (req, res, next) => {
   let id = req.params.id;
-  Book.remove({ _id: id }, (err) => {
+  Incident.remove({ _id: id }, (err) => {
     if (err) {
       console.log(err);
       res.end(err);
     }
     else {
-      res.redirect('/books');
+      res.redirect('/incidents');
     }
   });
 });
