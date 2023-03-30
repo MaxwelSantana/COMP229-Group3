@@ -12,10 +12,11 @@ router.get('/', (req, res, next) => {
       return console.error(err);
     }
     else {
-      res.render('incidents/index', {
-        title: 'Incidents',
-        incidents: sortIncidents(incidents)
-      });
+      // res.render('incidents/index', {
+      //   title: 'Incidents',
+      //   incidents: sortIncidents(incidents)
+      // });
+      res.json(incidents);
     }
   });
 
@@ -29,30 +30,6 @@ router.get('/add', (req, res, next) => {
   });
 });
 
-// POST process the Incident Details page and create a new Incident - CREATE
-router.post('/add', (req, res, next) => {
-  let newIncident = Incident({
-    "Title": req.body.title,
-    "Description": req.body.description,
-    "Date": req.body.date,
-    "Status": 'Pending',
-    "Severity": req.body.severity,
-    "Reporter": req.body.reporter,
-    "Area": req.body.area,
-    "Location": req.body.location,
-  });
-
-  Incident.create(newIncident, (err, incident) => {
-    if (err) {
-      console.log(err);
-      res.end(err);
-    }
-    else {
-      res.redirect('/incidents');
-    }
-  });
-});
-
 // GET the Incident Details page in order to edit an existing Incident
 router.get('/:id', (req, res, next) => {
   let id = req.params.id;
@@ -62,9 +39,31 @@ router.get('/:id', (req, res, next) => {
       res.end(err);
     }
     else {
-      res.render('incidents/details', {
-        title: 'Edit Incidents', incident: incidentToEdit,
-      });
+      res.json(incidentToEdit);
+    }
+  });
+});
+
+// POST process the Incident Details page and create a new Incident - CREATE
+router.post('/', (req, res, next) => {
+  let newIncident = Incident({
+    "Title": req.body.Title,
+    "Description": req.body.Description,
+    "Date": req.body.Date,
+    "Status": 'Pending',
+    "Severity": req.body.Severity,
+    "Reporter": req.body.Reporter,
+    "Area": req.body.Area,
+    "Location": req.body.Location,
+  });
+
+  Incident.create(newIncident, (err, incident) => {
+    if (err) {
+      console.log(err);
+      res.end(err);
+    }
+    else {
+      res.json(incident);
     }
   });
 });
@@ -74,30 +73,29 @@ router.post('/:id', (req, res, next) => {
   let id = req.params.id;
   let updatedIncident = Incident({
     "_id": id,
-    "Title": req.body.title,
-    "Description": req.body.description,
-    "Date": req.body.date,
-    "Status": 'Pending',
-    "Severity": req.body.severity,
-    "Reporter": req.body.reporter,
-    "Area": req.body.area,
-    "Location": req.body.location,
+    "Title": req.body.Title,
+    "Description": req.body.Description,
+    "Date": req.body.Date,
+    "Status": req.body.Status,
+    "Severity": req.body.Severity,
+    "Reporter": req.body.Reporter,
+    "Area": req.body.Area,
+    "Location": req.body.Location,
   });
-
   Incident.updateOne({ _id: id }, updatedIncident, (err) => {
     if (err) {
       console.log(err);
       res.end(err);
     }
     else {
-      res.redirect('/incidents');
+      res.json(updatedIncident);
     }
   });
 
 });
 
 // GET - process the delete by user id
-router.get('/delete/:id', (req, res, next) => {
+router.delete('/:id', (req, res, next) => {
   let id = req.params.id;
   Incident.remove({ _id: id }, (err) => {
     if (err) {
@@ -105,7 +103,7 @@ router.get('/delete/:id', (req, res, next) => {
       res.end(err);
     }
     else {
-      res.redirect('/incidents');
+      res.json(id);
     }
   });
 });
