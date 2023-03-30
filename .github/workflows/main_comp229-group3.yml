@@ -23,19 +23,26 @@ jobs:
       - name: npm install, build, and test - ANGULAR
         run: |
           npm install @angular/cli
-          npm install
+          npm ci
           npm run build
         working-directory: ./IncidentManagerClient
 
       - name: npm install, build, and test - SERVER
         run: |
-          npm install
-
-      - name: Upload artifact for deployment job
-        uses: actions/upload-artifact@v2
+          npm ci
+      - name: Upload server artifact
+        uses: actions/upload-artifact@v3
         with:
           name: node-app
-          path: .
+          path: |
+            *
+            !IncidentManagerClient
+
+      - name: Upload front artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: node-app
+          path: IncidentManagerClient/dist
 
   deploy:
     runs-on: ubuntu-latest
