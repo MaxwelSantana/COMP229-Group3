@@ -4,6 +4,7 @@ let express = require('express');
 let path = require('path');
 let cookieParser = require('cookie-parser');
 let logger = require('morgan');
+let cors = require('cors');
 
 // import "mongoose" - required for DB Access
 let mongoose = require('mongoose');
@@ -18,29 +19,25 @@ mongoDB.once('open', () => {
   console.log("Connected to MongoDB...");
 });
 
-
 // define routers
-let index = require('../routes/index'); // top level routes
 let incidents = require('../routes/incidents'); // routes for incidents
 
 let app = express();
 
-// view engine setup
-app.set('views', path.join(__dirname, '../views'));
-app.set('view engine', 'ejs');
-
 // uncomment after placing your favicon in /client
 app.use(logger('dev'));
+app.use(cors())
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
-app.use(express.static(path.join(__dirname, '../../client')));
-
+app.use(express.static(process.cwd() + "/IncidentManagerClient/dist/incident-manager-client/"));
 
 // route redirects
-app.use('/', index);
-app.use('/incidents', incidents);
+app.use('/api/incidents', incidents);
 
+app.get('/*', (req, res) => {
+  res.sendFile(process.cwd() + "/IncidentManagerClient/dist/incident-manager-client/index.html")
+});
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

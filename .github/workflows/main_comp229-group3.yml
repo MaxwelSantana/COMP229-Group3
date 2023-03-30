@@ -20,18 +20,29 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: '18.x'
-
-      - name: npm install, build, and test
+      - name: npm install, build, and test - ANGULAR
         run: |
-          npm install
-          npm run build --if-present
-          npm run test --if-present
+          npm install @angular/cli
+          npm ci
+          npm run build
+        working-directory: ./IncidentManagerClient
 
-      - name: Upload artifact for deployment job
-        uses: actions/upload-artifact@v2
+      - name: npm install, build, and test - SERVER
+        run: |
+          npm ci
+      - name: Upload server artifact
+        uses: actions/upload-artifact@v3
         with:
           name: node-app
-          path: .
+          path: |
+            *
+            !IncidentManagerClient
+
+      - name: Upload front artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: node-app
+          path: IncidentManagerClient/dist
 
   deploy:
     runs-on: ubuntu-latest

@@ -1,0 +1,112 @@
+<div class="container">
+  <div class="row mt-2">
+    <div class="col-md-offset-3 col-md-6">
+      <div
+        class="p-2"
+        [class.bg-warning]="editing"
+        [class.text-dark]="editing"
+        [class.bg-primary]="!editing"
+        [class.text-white]="!editing"
+      >
+        <h5>{{ editing ? "Edit" : "Create" }} Product</h5>
+      </div>
+      <form novalidate #form="ngForm" (ngSubmit)="save(form)" *ngIf="incident">
+        <div class="form-group">
+          <label for="TitleTextField">Title</label>
+          <input
+            type="text"
+            class="form-control"
+            id="TitleTextField"
+            placeholder="Incident Title"
+            name="title"
+            [(ngModel)]="incident.Title"
+            required
+          />
+        </div>
+        <div class="form-group">
+          <label for="DescriptionTextField">Description</label>
+          <input
+            type="text"
+            class="form-control"
+            id="DescriptionTextField"
+            placeholder="Incident Description"
+            name="description"
+            [(ngModel)]="incident.Description"
+            required
+          />
+        </div>
+        <div class="form-group">
+          <label for="DateField">Date</label>
+          <input
+            type="date"
+            class="form-control"
+            id="DateField"
+            placeholder="Incident Date"
+            name="date"
+            [(ngModel)]="incident.Date"
+            required
+          />
+        </div>
+
+        <div class="form-group">
+          <label for="SeveritySelectField">Severity</label>
+          <select
+            class="form-control"
+            id="SeveritySelectField"
+            name="severity"
+            [(ngModel)]="incident.Severity"
+            required
+          >
+            <option selected value="Low">Low</option>
+            <option value="Medium">Medium</option>
+            <option value="High">High</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="ReporterTextField">Reporter</label>
+          <input
+            type="text"
+            class="form-control"
+            id="ReporterTextField"
+            placeholder="Incident Reporter"
+            name="reporter"
+            [(ngModel)]="incident.Reporter"
+            required
+          />
+        </div>
+        <div class="form-group">
+          <label for="AreaTextField">Area</label>
+          <input
+            type="text"
+            class="form-control"
+            id="AreaTextField"
+            placeholder="Incident Area"
+            name="area"
+            [(ngModel)]="incident.Area"
+          />
+        </div>
+        <div class="form-group">
+          <label for="LocationTextField">Location</label>
+          <input
+            type="text"
+            class="form-control"
+            id="LocationTextField"
+            placeholder="Incident Location"
+            name="location"
+            [(ngModel)]="incident.Location"
+          />
+        </div>
+        <button
+          type="submit"
+          class="btn btn-primary m-1"
+          [class.btn-warning]="editing"
+        >
+          {{ editing ? "Save" : "Create" }}
+        </button>
+        <button type="reset" class="btn btn-secondary" routerLink="/incidents">
+          Cancel
+        </button>
+      </form>
+    </div>
+  </div>
+</div>
