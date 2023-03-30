@@ -1,0 +1,42 @@
+name: Build Test
+
+on:
+  push:
+    branches:
+      - convert-frontend-to-angular
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Set up Node.js version
+        uses: actions/setup-node@v1
+        with:
+          node-version: '18.x'
+      - name: npm install, build, and test - ANGULAR
+        run: |
+          npm install @angular/cli
+          npm install
+          npm run build
+        working-directory: ./IncidentManagerClient
+
+      - name: npm install, build, and test - SERVER
+        run: |
+          npm install
+      - name: Upload server artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: node-app
+          path: |
+            *
+            !IncidentManagerClient
+            
+      - name: Upload front artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: node-app
+          path: IncidentManagerClient/dist
