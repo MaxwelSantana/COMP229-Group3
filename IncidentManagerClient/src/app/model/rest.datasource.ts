@@ -11,7 +11,8 @@ export class RestDataSource {
   auth_token!: string;
 
   constructor(private http: HttpClient) {
-    this.baseUrl = `${PROTOCOL}://${location.hostname}:${PORT}/`;
+    // this.baseUrl = `${PROTOCOL}://${location.hostname}:${PORT}/api/`;
+    this.baseUrl = `/api/`;
   }
   getIncidents(): Observable<Incident[]> {
     return this.http.get<Incident[]>(this.baseUrl + 'incidents');

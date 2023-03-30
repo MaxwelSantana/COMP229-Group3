@@ -30,9 +30,14 @@ app.use(cors())
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
+app.use(express.static(process.cwd() + "/IncidentManagerClient/dist/incident-manager-client/"));
 
 // route redirects
-app.use('/incidents', incidents);
+app.use('/api/incidents', incidents);
+
+app.get('/*', (req, res) => {
+  res.sendFile(process.cwd() + "/IncidentManagerClient/dist/incident-manager-client/index.html")
+});
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

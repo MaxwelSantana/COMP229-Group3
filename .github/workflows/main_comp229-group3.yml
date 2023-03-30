@@ -20,12 +20,16 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: '18.x'
+      - name: npm install, build, and test - ANGULAR
+        run: |
+          npm install @angular/cli
+          npm install
+          npm run build
+        working-directory: ./IncidentManagerClient
 
-      - name: npm install, build, and test
+      - name: npm install, build, and test - SERVER
         run: |
           npm install
-          npm run build --if-present
-          npm run test --if-present
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v2
