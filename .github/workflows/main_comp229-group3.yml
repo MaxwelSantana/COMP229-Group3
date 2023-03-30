@@ -36,13 +36,8 @@ jobs:
           name: node-app
           path: |
             *
-            !IncidentManagerClient
-
-      - name: Upload front artifact
-        uses: actions/upload-artifact@v3
-        with:
-          name: node-app
-          path: IncidentManagerClient/dist
+            !IncidentManagerClient/*
+            IncidentManagerClient/dist
 
   deploy:
     runs-on: ubuntu-latest
