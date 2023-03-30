@@ -96,13 +96,6 @@
             [(ngModel)]="incident.Location"
           />
         </div>
-
-        <!-- <button type="submit" class="btn btn-primary">
-          <i class="fa fa-check-square-o"></i> Submit
-        </button>
-        <a href="/incidents" class="btn btn-warning"
-          ><i class="fa fa-undo"></i> Cancel</a
-        > -->
         <button
           type="submit"
           class="btn btn-primary m-1"
@@ -110,57 +103,10 @@
         >
           {{ editing ? "Save" : "Create" }}
         </button>
-        <button
-          type="reset"
-          class="btn btn-secondary"
-          routerLink="/admin/main/products"
-        >
+        <button type="reset" class="btn btn-secondary" routerLink="/incidents">
           Cancel
         </button>
       </form>
     </div>
   </div>
 </div>
-<!--
-<form novalidate #form="ngForm" (ngSubmit)="save(form)">
-  <div class="form-group">
-    <label>Name</label>
-    <input class="form-control" name="name" [(ngModel)]="incident.Title" />
-  </div>
-   <div class="form-group">
-    <label>Category</label>
-    <input
-      class="form-control"
-      name="category"
-      [(ngModel)]="incident.category"
-    />
-  </div>
-  <div class="form-group">
-    <label>Description</label>
-    <textarea
-      class="form-control"
-      name="description"
-      [(ngModel)]="incident.description"
-    >
-    </textarea>
-  </div>
-  <div class="form-group">
-    <label>Price</label>
-    <input class="form-control" name="price" [(ngModel)]="incident.price" />
-  </div>
-  <button
-    type="submit"
-    class="btn btn-primary m-1"
-    [class.btn-warning]="editing"
-  >
-    {{ editing ? "Save" : "Create" }}
-  </button>
-  <button
-    type="reset"
-    class="btn btn-secondary"
-    routerLink="/admin/main/products"
-  >
-    Cancel
-  </button>
-</form>
--->
