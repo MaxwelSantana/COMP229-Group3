@@ -1,11 +1,30 @@
 // modules required for routing
 const express = require('express');
+const jwt = require('jsonwebtoken');
+const DB = require('../config/db');
 const router = express.Router();
 const Incident = require('../models/incidents');
 const { sortIncidents } = require('../helper/incidents-helper');
 
+function requireAuth(req, res, next) {
+  const authHeader = req.headers['authorization']
+  const token = authHeader && authHeader.split(' ')[1]
+
+  if (token == null) return res.sendStatus(401)
+
+  jwt.verify(token, DB.Secret, (err, user) => {
+    console.log(err);
+
+    if (err) return res.sendStatus(403);
+
+    req.user = user;
+
+    next();
+  });
+}
+
 /* GET incidents List page. READ */
-router.get('/', (req, res, next) => {
+router.get('/', requireAuth, (req, res, next) => {
   // find all incidents in the incidents collection
   Incident.find((err, incidents) => {
     if (err) {

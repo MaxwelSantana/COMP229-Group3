@@ -9,6 +9,7 @@ import { HomeComponent } from './pages/home/home.component';
 import { BasePageComponent } from './partials/base-page/base-page.component';
 import { ModelModule } from './model/model.module';
 import { IncidentModule } from './incident/incident.module';
+import { AdminModule } from './auth/admin.module';
 
 @NgModule({
   declarations: [
@@ -18,7 +19,7 @@ import { IncidentModule } from './incident/incident.module';
     HomeComponent,
     BasePageComponent,
   ],
-  imports: [BrowserModule, AppRoutingModule, ModelModule, IncidentModule],
+  imports: [BrowserModule, AppRoutingModule, ModelModule, IncidentModule, AdminModule],
   providers: [],
   bootstrap: [AppComponent],
 })
