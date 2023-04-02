@@ -1,17 +1,20 @@
-<div class="bg-info p-2 text-center text-white">
-  <h3>Incident Admin</h3>
+<div class = "p-2 text-center text-white" style="background-color: burlywood; width: 100%">
+  <h3 style="color: white;
+  text-shadow: 0 1px 6px rgba(81, 81, 81, 0.5);
+  text-align: center;
+  font-size: 35px;">Admin Credentials</h3>
 </div>
 <div
-  class="bg-danger mt-2 p-2 text-center text-white"
+  class="mt-2 p-2 text-center" style="color: red; font-size: 15px;"
   *ngIf="errorMessage != null"
 >
   {{ errorMessage }}
 </div>
 <div class="p-2">
   <form novalidate #myForm="ngForm" (ngSubmit)="authenticate(myForm)">
-    <div class="form-group">
-      <label>Email</label>
-      <input
+    <div class="form-group" style="padding: 10px; width: 30%; margin: 0 auto;">
+      <label style="padding-left: 5px;">Email</label>
+      <input 
         class="form-control"
         name="email"
         type="email"
@@ -19,8 +22,8 @@
         required
       />
     </div>
-    <div class="form-group">
-      <label>Password</label>
+    <div class="form-group" style="padding: 10px; width: 30%; margin: 0 auto;"  >
+      <label style="padding-left: 5px;">Password</label>
       <input
         class="form-control"
         type="password"
@@ -32,12 +35,11 @@
     <div class="text-center">
       <p>
         Don't have an account?
-        <a class="pe-auto" routerLink="/register">Sign up</a>
+        <a class="pe-auto" routerLink="/register" style="color: burlywood">Sign up</a>
       </p>
-      <button class="btn btn-secondary m-1" type="reset" (click)="goBack()">
-        Go back
+      <button class="btn btn-secondary m-1" type="reset" (click)="goBack()" style="border-color: white">Go back
       </button>
-      <button class="btn btn-primary m-1" type="submit">Log In</button>
+      <button class="btn btn-primary m-1" type="submit" style="background-color: burlywood; border-color: white;">Log In</button>
     </div>
   </form>
 </div>
