@@ -4,11 +4,11 @@ import { Router } from '@angular/router';
 import { AuthService } from '../model/auth.service';
 
 @Component({
-  templateUrl: 'auth.component.html',
+  templateUrl: 'login.component.html',
 })
-export class AuthComponent {
-  public username: string = 'maxwel';
-  public password: string = '123456';
+export class LoginComponent {
+  public email: string = '';
+  public password: string = '';
   public errorMessage: string = '';
 
   constructor(private router: Router, private auth: AuthService) {}
@@ -21,7 +21,7 @@ export class AuthComponent {
     console.log('form submit');
     if (form.valid) {
       this.auth
-        .authenticate(this.username, this.password)
+        .authenticate(this.email, this.password)
         .subscribe((response) => {
           if (response) {
             this.router.navigateByUrl('/incidents');

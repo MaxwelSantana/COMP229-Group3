@@ -4,8 +4,15 @@ import { RestDataSource } from './rest.datasource';
 @Injectable()
 export class AuthService {
   constructor(private datasource: RestDataSource) {}
-  authenticate(username: string, password: string): Observable<boolean> {
-    return this.datasource.authenticate(username, password);
+  authenticate(email: string, password: string): Observable<boolean> {
+    return this.datasource.authenticate(email, password);
+  }
+  signup(
+    displayName: string,
+    email: string,
+    password: string
+  ): Observable<boolean> {
+    return this.datasource.signup(displayName, email, password);
   }
   get authenticated(): boolean {
     return !!this.datasource.auth_token;

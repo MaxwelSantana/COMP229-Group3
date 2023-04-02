@@ -4,9 +4,10 @@ import { FormsModule } from '@angular/forms';
 import { IncidentEditorComponent } from './incidentEditor.component';
 import { IncidentTableComponent } from './incidentTable.component';
 import { AppRoutingModule } from '../app-routing.module';
+import { RouterModule } from '@angular/router';
 
 @NgModule({
   declarations: [IncidentEditorComponent, IncidentTableComponent],
-  imports: [CommonModule, FormsModule, AppRoutingModule],
+  imports: [CommonModule, FormsModule, RouterModule.forChild([])],
 })
 export class IncidentModule {}

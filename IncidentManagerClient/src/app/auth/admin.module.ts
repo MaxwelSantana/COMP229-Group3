@@ -1,14 +1,16 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { RouterModule } from '@angular/router';
-import { AuthComponent } from './auth.component';
+import { LoginComponent } from './login.component';
 import { AuthGuard } from './auth.guard';
-import { IncidentTableComponent } from '../incident/incidentTable.component';
+import { RegisterComponent } from './register.component';
 import { IncidentEditorComponent } from '../incident/incidentEditor.component';
+import { IncidentTableComponent } from '../incident/incidentTable.component';
+import { RouterModule, Routes } from '@angular/router';
 
-let routing = RouterModule.forChild([
-  { path: 'auth', component: AuthComponent },
+const routes: Routes = [
+  { path: 'login', component: LoginComponent },
+  { path: 'register', component: RegisterComponent },
   {
     path: 'incidents/:mode/:id',
     component: IncidentEditorComponent,
@@ -24,12 +26,11 @@ let routing = RouterModule.forChild([
     component: IncidentTableComponent,
     canActivate: [AuthGuard],
   },
-  { path: '**', redirectTo: 'incidents' },
-]);
+];
 
 @NgModule({
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, RouterModule.forChild(routes)],
   providers: [AuthGuard],
-  declarations: [AuthComponent],
+  declarations: [LoginComponent, RegisterComponent],
 })
 export class AdminModule {}

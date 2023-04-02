@@ -13,7 +13,7 @@ router.post('/login', (req, res, next) => {
 		}
 		// is there a user login error?
 		if (!user) {
-			return res.status(304).json({ success: false, error: "Authenticate Error" });
+			return res.json({ success: false, error: "Authenticate Error" });
 		}
 		req.login(user, (err) => {
 			//server error?
@@ -23,7 +23,6 @@ router.post('/login', (req, res, next) => {
 			const payload = {
 				id: user._id,
 				displayName: user.displayName,
-				username: user.username,
 				email: user.email
 			}
 			const authToken = jwt.sign(payload, DB.Secret, {
@@ -33,7 +32,6 @@ router.post('/login', (req, res, next) => {
 				success: true, msg: 'user Logged in Successfully', user: {
 					id: user._id,
 					displayName: user.displayName,
-					username: user.username,
 					email: user.email
 				}, token: authToken
 			});
@@ -42,9 +40,7 @@ router.post('/login', (req, res, next) => {
 });
 
 router.post('/register', (req, res, next) => {
-	//instantiate a user object
 	let newUser = new User({
-		username: req.body.username,
 		email: req.body.email,
 		displayName: req.body.displayName
 	});
@@ -52,17 +48,19 @@ router.post('/register', (req, res, next) => {
 	User.register(newUser, req.body.password, (err) => {
 		if (err) {
 			console.log("Error: inserting New User");
-			return res.json({ success: false, error: JSON.stringify(err)});
+			return res.json({ success: false, error: JSON.stringify(err) });
 		}
 		else {
-			const payload = { ...newUser, id: newUser._id };
+			const payload = {
+				id: newUser._id,
+				displayName: newUser.displayName,
+				email: newUser.email
+			}
 			const authToken = jwt.sign(payload, DB.Secret, {
 				expiresIn: 604800 // 1 Week
 			});
 
-			return passport.authenticate('local')(req, res, () => {
-				return res.json({ success: true, msg: 'user Registered Successfully!', token: authToken });
-			});
+			return res.json({ success: true, msg: 'user Registered Successfully!', token: authToken });
 		}
 	});
 });

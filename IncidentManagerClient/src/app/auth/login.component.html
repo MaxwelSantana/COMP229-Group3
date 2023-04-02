@@ -10,11 +10,12 @@
 <div class="p-2">
   <form novalidate #myForm="ngForm" (ngSubmit)="authenticate(myForm)">
     <div class="form-group">
-      <label>Name</label>
+      <label>Email</label>
       <input
         class="form-control"
-        name="username"
-        [(ngModel)]="username"
+        name="email"
+        type="email"
+        [(ngModel)]="email"
         required
       />
     </div>
@@ -29,6 +30,10 @@
       />
     </div>
     <div class="text-center">
+      <p>
+        Don't have an account?
+        <a class="pe-auto" routerLink="/register">Sign up</a>
+      </p>
       <button class="btn btn-secondary m-1" type="reset" (click)="goBack()">
         Go back
       </button>

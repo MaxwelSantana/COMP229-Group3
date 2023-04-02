@@ -23,15 +23,34 @@ export class RestDataSource {
       this.getOptions()
     );
   }
-  authenticate(user: string, pass: string): Observable<boolean> {
+  authenticate(email: string, pass: string): Observable<boolean> {
     return this.http
       .post<any>(this.baseUrl + 'auth/login', {
-        username: user,
+        email: email,
         password: pass,
       })
       .pipe(
         map((response) => {
           console.log('authenticate', { response });
+          this.auth_token = response.success ? response.token : null;
+          return response.success;
+        })
+      );
+  }
+  signup(
+    displayName: string,
+    email: string,
+    password: string
+  ): Observable<boolean> {
+    return this.http
+      .post<any>(this.baseUrl + 'auth/register', {
+        displayName,
+        email,
+        password,
+      })
+      .pipe(
+        map((response) => {
+          console.log('auth/register', { response });
           this.auth_token = response.success ? response.token : null;
           return response.success;
         })

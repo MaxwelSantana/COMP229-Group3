@@ -31,10 +31,6 @@ router.get('/', requireAuth, (req, res, next) => {
       return console.error(err);
     }
     else {
-      // res.render('incidents/index', {
-      //   title: 'Incidents',
-      //   incidents: sortIncidents(incidents)
-      // });
       res.json(incidents);
     }
   });
