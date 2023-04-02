@@ -31,19 +31,28 @@
           >
         </li>
 
-        <li class="nav-item">
-          <a class="nav-link" routerLink="/incidents" routerLinkActive="active"
-            ><i class="fa fa-book fa-lg"></i> Incident List</a
-          >
-
+        <ng-container *ngIf="authenticated; else loginLink">
+          <li class="nav-item">
+            <a
+              class="nav-link"
+              routerLink="/incidents"
+              routerLinkActive="active"
+              ><i class="fa fa-book fa-lg"></i> Incident List</a
+            >
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" (click)="logout()"
+              ><i class="fa fa-book fa-lg"></i> Logout</a
+            >
+          </li>
+        </ng-container>
+        <ng-template #loginLink>
           <li class="nav-item">
             <a class="nav-link" routerLink="/auth" routerLinkActive="active"
               ><i class="fa fa-book fa-lg"></i> Login</a
             >
-        
-          
-                      
-        </li>
+          </li>
+        </ng-template>
       </ul>
     </div>
   </div>
