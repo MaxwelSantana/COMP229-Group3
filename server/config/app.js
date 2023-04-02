@@ -5,6 +5,11 @@ let path = require('path');
 let cookieParser = require('cookie-parser');
 let logger = require('morgan');
 let cors = require('cors');
+let passport = require('passport');
+let passportJWT = require('passport-jwt');
+let JWTStrategy = passportJWT.Strategy;
+let ExtractJWT = passportJWT.ExtractJwt;
+let passportLocal = require('passport-local');
 
 // import "mongoose" - required for DB Access
 let mongoose = require('mongoose');
@@ -20,7 +25,8 @@ mongoDB.once('open', () => {
 });
 
 // define routers
-let incidents = require('../routes/incidents'); // routes for incidents
+let incidents = require('../routes/incidents');
+let auth = require('../routes/auth');
 
 let app = express();
 
@@ -32,8 +38,31 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(process.cwd() + "/IncidentManagerClient/dist/incident-manager-client/"));
 
+//initialize passport
+app.use(passport.initialize());
+app.use(passport.session());
+
+let User = require('../models/user');
+passport.use(User.createStrategy());
+//serialize and deserialize the user info.
+passport.serializeUser(User.serializeUser());
+passport.deserializeUser(User.deserializeUser());
+
+let jwtOptions = {};
+jwtOptions.jwtFromRequest = ExtractJWT.fromAuthHeaderAsBearerToken();
+jwtOptions.secretOrKey = DB.Secret;
+let strategy = new JWTStrategy(jwtOptions, (jwt_payload, done) => {
+  User.findById(jwt_payload.id).then(user => {
+    return done(null, user);
+  }).catch(err => {
+    return done(err, false);
+  });
+});
+passport.use(strategy);
+
 // route redirects
 app.use('/api/incidents', incidents);
+app.use('/api/auth', auth);
 
 app.get('/*', (req, res) => {
   res.sendFile(process.cwd() + "/IncidentManagerClient/dist/incident-manager-client/index.html")
