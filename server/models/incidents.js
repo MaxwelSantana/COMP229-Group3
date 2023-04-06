@@ -8,9 +8,11 @@ let Incident = mongoose.Schema({
   Area: String,
   Location: String,
   Date: Date,
+  RecordNumber: String,
+  Narrative: String,
   Status: {
     type: String,
-    enum: ['Pending', 'In Progress', 'Done']
+    enum: ['New', 'In Progress','Dispatched','Close']
   },
   Severity: {
     type: String,

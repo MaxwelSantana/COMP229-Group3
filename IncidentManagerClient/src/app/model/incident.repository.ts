@@ -21,10 +21,14 @@ export class IncidentRepository {
   }
 
   saveIncident(incident: Incident) {
-    if (incident._id == null || incident._id == 0) {
+
+      if (incident._id == null || incident._id == 0) {
+ 
+
       this.dataSource
         .saveIncident(incident)
         .subscribe((p) => this.incidents.push(p));
+
     } else {
       this.dataSource.updateIncident(incident).subscribe((p) => {
         this.incidents.splice(
@@ -36,6 +40,7 @@ export class IncidentRepository {
     }
   }
 
+  
   deleteProduct(id: number) {
     this.dataSource.deleteIncident(id).subscribe((p) => {
       this.incidents.splice(
