@@ -44,7 +44,7 @@
             placeholder="Incident Date"
             name="date"
             [(ngModel)]="incident.Date"
-            required
+          required
           />
         </div>
 
@@ -94,8 +94,35 @@
             placeholder="Incident Location"
             name="location"
             [(ngModel)]="incident.Location"
+            readonly
           />
         </div>
+        <div class="form-group">
+          <label for="StatusTextField">Status</label>
+          <input
+            type="text"
+            class="form-control"
+            id="StatusTextField"
+            placeholder="Incident Status"
+            name="status"
+            [(ngModel)]="incident.Status"
+            required
+          />
+        </div>
+
+        <div class="form-group">
+          <label for="NarrativeTextField">Incident Narrative</label>
+          <input
+            type="text"
+            class="form-control"
+            id="NarrativeTextField"
+            placeholder="Incident Narrative"
+            name="status"
+            [(ngModel)]="incident.Narrative"
+            required
+          />
+        </div>
+
         <button
           type="submit"
           class="btn btn-primary m-1"

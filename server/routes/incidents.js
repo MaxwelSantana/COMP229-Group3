@@ -60,16 +60,28 @@ router.get('/:id', (req, res, next) => {
 });
 
 // POST process the Incident Details page and create a new Incident - CREATE
-router.post('/', (req, res, next) => {
+router.post('/', async (req, res, next) => {
+  let currentDate = new Date(); 
+  let incidentDate = `${currentDate.getDate().toString().padStart(2, '0')}${(currentDate.getMonth()+1).toString().padStart(2, '0')}${currentDate.getFullYear().toString().substr(-2)}`;
+  
+  
+ let lastIncident = await Incident.findOne().sort({ $natural: -1 }).exec();
+ let lastIncidentNumber = lastIncident ? await Incident.countDocuments() : 0;
+
+
+ // Increment the last incident number and pad with leading zeros
+  let newIncidentNumber = (lastIncidentNumber + 1).toString().padStart(7, '0');
+  
   let newIncident = Incident({
     "Title": req.body.Title,
     "Description": req.body.Description,
     "Date": req.body.Date,
-    "Status": 'Pending',
+    "Status": 'New',
     "Severity": req.body.Severity,
     "Reporter": req.body.Reporter,
     "Area": req.body.Area,
     "Location": req.body.Location,
+    "RecordNumber": `${incidentDate}-${newIncidentNumber}`,
   });
 
   Incident.create(newIncident, (err, incident) => {

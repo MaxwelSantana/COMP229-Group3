@@ -18,6 +18,7 @@
           <th class="text-center">Reporter</th>
           <th class="text-center">Area</th>
           <th class="text-center">Location</th>
+          <th class="text-center">Record Number</th>
           <th class="text-center"></th>
         </tr>
       </thead>
@@ -26,13 +27,14 @@
           <td>{{ incident.Title }}</td>
           <td class="text-center">{{ incident.Description }}</td>
           <td class="text-center">
-            {{ incident.Date }}
+            {{ incident.Date | date: 'yyyy-MM-dd' }}
           </td>
           <td class="text-center">{{ incident.Status }}</td>
           <td class="text-center">{{ incident.Severity }}</td>
           <td class="text-center">{{ incident.Reporter }}</td>
           <td class="text-center">{{ incident.Area }}</td>
           <td class="text-center">{{ incident.Location }}</td>
+          <td class="text-center">{{ incident.RecordNumber }}</td>
           <td>
             <button
               class="btn btn-sm btn-warning m-1"
@@ -46,6 +48,7 @@
             >
               Delete
             </button>
+          
           </td>
         </tr>
       </tbody>

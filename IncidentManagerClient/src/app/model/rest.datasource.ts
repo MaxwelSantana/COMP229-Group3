@@ -13,8 +13,8 @@ export class RestDataSource {
   auth_token!: string;
 
   constructor(private http: HttpClient) {
-    //this.baseUrl = `${PROTOCOL}://${location.hostname}:${PORT}/api/`;
-    this.baseUrl = `/api/`;
+    this.baseUrl = `${PROTOCOL}://${location.hostname}:${PORT}/api/`;
+    //this.baseUrl = `/api/`;
   }
   getIncidents(): Observable<Incident[]> {
     console.log('getIncidents', this.getOptions(), { token: this.auth_token });

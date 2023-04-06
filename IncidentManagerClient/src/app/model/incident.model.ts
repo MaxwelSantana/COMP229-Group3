@@ -8,6 +8,8 @@ export class Incident {
     public Location?: string,
     public Date?: Date,
     public Status?: string,
-    public Severity?: string
+    public Severity?: string,
+    public RecordNumber?: string,
+    public Narrative?: string,
   ) {}
 }

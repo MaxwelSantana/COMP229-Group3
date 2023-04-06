@@ -8,6 +8,7 @@ import { IncidentEditorComponent } from '../incident/incidentEditor.component';
 import { IncidentTableComponent } from '../incident/incidentTable.component';
 import { RouterModule, Routes } from '@angular/router';
 
+
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
@@ -16,6 +17,7 @@ const routes: Routes = [
     component: IncidentEditorComponent,
     canActivate: [AuthGuard],
   },
+
   {
     path: 'incidents/:mode',
     component: IncidentEditorComponent,
