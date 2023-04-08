@@ -1,16 +1,29 @@
 <div class="container">
   <div class="row mt-2">
-    <h3>Incident List</h3>
+    <h1>Dashboard</h1>
+    <h3>Incidents</h3>
     <div>
       <button type="reset" class="btn btn-primary" routerLink="/incidents/add">
         <i class="fa fa-plus"></i> Add an incident
       </button>
+      <div class="form-check">
+        <input
+          class="form-check-input"
+          type="checkbox"
+          [(ngModel)]="showResolvedIncidents"
+          id="flexCheckDefault"
+        />
+        <label class="form-check-label" for="flexCheckDefault">
+          Show Resolved Incidents
+        </label>
+      </div>
     </div>
     <br />
     <table class="table table-bordered table-striped table-hover">
       <thead>
         <tr>
           <th>Title</th>
+          <th class="text-center">Record Number</th>
           <th class="text-center">Description</th>
           <th class="text-center">Date</th>
           <th class="text-center">Status</th>
@@ -18,40 +31,69 @@
           <th class="text-center">Reporter</th>
           <th class="text-center">Area</th>
           <th class="text-center">Location</th>
-          <th class="text-center">Record Number</th>
-          <th class="text-center"></th>
         </tr>
       </thead>
       <tbody>
         <tr *ngFor="let incident of getIncidents()">
-          <td>{{ incident.Title }}</td>
+          <td class="text-center">
+            <a href="#" [routerLink]="['/incidents/edit', incident._id]">
+              {{ getRecordNumber(incident) }}
+            </a>
+          </td>
+          <td>
+            {{ incident.Title }}
+          </td>
           <td class="text-center">{{ incident.Description }}</td>
           <td class="text-center">
-            {{ incident.Date | date: 'yyyy-MM-dd' }}
+            {{ incident.Date | date : "yyyy-MM-dd" }}
           </td>
           <td class="text-center">{{ incident.Status }}</td>
           <td class="text-center">{{ incident.Severity }}</td>
           <td class="text-center">{{ incident.Reporter }}</td>
           <td class="text-center">{{ incident.Area }}</td>
           <td class="text-center">{{ incident.Location }}</td>
-          <td class="text-center">{{ incident.RecordNumber }}</td>
-          <td>
-            <button
-              class="btn btn-sm btn-warning m-1"
-              [routerLink]="['/incidents/edit', incident._id]"
-            >
-              Edit
-            </button>
-            <button
-              class="btn btn-sm btn-danger"
-              (click)="deleteProduct(incident._id)"
-            >
-              Delete
-            </button>
-          
-          </td>
         </tr>
       </tbody>
     </table>
+
+    <ng-container *ngIf="showResolvedIncidents">
+      <h4>Resolved Incidents</h4>
+      <table class="table table-bordered table-striped table-hover">
+        <thead>
+          <tr>
+            <th>Title</th>
+            <th class="text-center">Record Number</th>
+            <th class="text-center">Description</th>
+            <th class="text-center">Date</th>
+            <th class="text-center">Status</th>
+            <th class="text-center">Severity</th>
+            <th class="text-center">Reporter</th>
+            <th class="text-center">Area</th>
+            <th class="text-center">Location</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let incident of getResolvedIncidents()">
+            <td class="text-center">
+              <a href="#" [routerLink]="['/incidents/edit', incident._id]">
+                {{ getRecordNumber(incident) }}
+              </a>
+            </td>
+            <td>
+              {{ incident.Title }}
+            </td>
+            <td class="text-center">{{ incident.Description }}</td>
+            <td class="text-center">
+              {{ incident.Date | date : "yyyy-MM-dd" }}
+            </td>
+            <td class="text-center">{{ incident.Status }}</td>
+            <td class="text-center">{{ incident.Severity }}</td>
+            <td class="text-center">{{ incident.Reporter }}</td>
+            <td class="text-center">{{ incident.Area }}</td>
+            <td class="text-center">{{ incident.Location }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </ng-container>
   </div>
 </div>
