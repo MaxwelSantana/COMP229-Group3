@@ -1,14 +1,13 @@
 <div class="container">
   <div class="row mt-2">
-    <div class="col-md-offset-3 col-md-6">
-      <div
-        class="p-2"
-        [class.bg-warning]="editing"
-        [class.text-dark]="editing"
-        [class.bg-primary]="!editing"
-        [class.text-white]="!editing"
+    <div class="col-md-offset-12 col-md-12">
+      <div style="background-color: burlywood; width: 100%"
+        class="p-2 text-center text-white"
       >
-        <h5>{{ editing ? "Edit" : "Create" }} Incident</h5>
+        <h3 style="color: white;
+        text-shadow: 0 1px 6px rgba(81, 81, 81, 0.5);
+        text-align: center;
+        font-size: 30px;">{{ editing ? "Edit" : "Create" }} Incident</h3>
       </div>
       <div
         class="mt-2 p-2 text-center"
@@ -24,7 +23,8 @@
         *ngIf="showForm()"
         novalidate
       >
-        <div class="form-group">
+      <div class="row">
+        <div class="form-group col-md-12" *ngIf="editing">
           <label for="RecordNumberTextField">Record Number</label>
           <input
             *ngIf="editing"
@@ -38,7 +38,10 @@
             disabled
           />
         </div>
-        <div class="form-group">
+         
+      </div>
+        <div class="row">
+        <div class="form-group  col-md-6">
           <label for="TitleTextField">Title</label>
           <input
             type="text"
@@ -51,20 +54,21 @@
             [disabled]="isTicketClosed()"
           />
         </div>
-        <div class="form-group">
-          <label for="DescriptionTextField">Description</label>
+        <div class="form-group col-md-6">
+          <label for="LocationTextField">Location</label>
           <input
             type="text"
             class="form-control"
-            id="DescriptionTextField"
-            placeholder="Incident Description"
-            name="description"
-            [(ngModel)]="incident.Description"
-            required
+            id="LocationTextField"
+            placeholder="Incident Location"
+            name="location"
+            [(ngModel)]="incident.Location"
             [disabled]="isTicketClosed()"
           />
         </div>
-        <div class="form-group">
+      </div>
+      <div class="row">
+        <div class="form-group  col-md-6">
           <label for="DateField">Date</label>
           <input
             type="date"
@@ -78,7 +82,7 @@
           />
         </div>
 
-        <div class="form-group">
+        <div class="form-group col-md-6">
           <label for="SeveritySelectField">Severity</label>
           <select
             class="form-control"
@@ -93,7 +97,9 @@
             <option value="High">High</option>
           </select>
         </div>
-        <div class="form-group">
+      </div>
+      <div class="row">
+        <div class="form-group  col-md-6">
           <label for="ReporterTextField">Reporter</label>
           <input
             type="text"
@@ -106,7 +112,7 @@
             [disabled]="isTicketClosed()"
           />
         </div>
-        <div class="form-group">
+          <div class="form-group  col-md-6">
           <label for="AreaTextField">Area</label>
           <input
             type="text"
@@ -118,40 +124,45 @@
             [disabled]="isTicketClosed()"
           />
         </div>
-        <div class="form-group">
-          <label for="LocationTextField">Location</label>
-          <input
-            type="text"
-            class="form-control"
-            id="LocationTextField"
-            placeholder="Incident Location"
-            name="location"
-            [(ngModel)]="incident.Location"
-            [disabled]="isTicketClosed()"
-          />
-        </div>
+      </div>
+      <div class="form-group  col-md-12" >
+        <label for="DescriptionTextField">Description</label>
+        <textarea
+          type="text"
+          class="form-control"
+          id="DescriptionTextField"
+          placeholder="Incident Description"
+          name="description"
+          cols="40" 
+          rows="5"
+          [(ngModel)]="incident.Description"
+          required
+          [disabled]="isTicketClosed()"
+        ></textarea>
+      </div>
+      <ng-container>
+      <div class="form-group col-md-3" *ngIf="editing">
+        <label for="StatusTextField">Status</label>
+        <select
+          class="form-control"
+          id="StatusTextField"
+          name="Status"
+          #Status="ngModel"
+          [(ngModel)]="incident.Status"
+          required
+          [disabled]="isTicketClosed()"
+        >
+          <option value="New">New</option>
+          <option value="In Progress">In Progress</option>
+          <option value="Dispatched">Dispatched</option>
+          <option value="Close">Close</option>
+        </select>
+      </div>
         <ng-container *ngIf="editing">
-          <div class="form-group">
-            <label for="StatusTextField">Status</label>
-            <select
-              class="form-control"
-              id="StatusTextField"
-              name="Status"
-              #Status="ngModel"
-              [(ngModel)]="incident.Status"
-              required
-              [disabled]="isTicketClosed()"
-            >
-              <option value="New">New</option>
-              <option value="In Progress">In Progress</option>
-              <option value="Dispatched">Dispatched</option>
-              <option value="Close">Close</option>
-            </select>
-          </div>
           <div class="form-group" *ngIf="hasStatusChange()">
             <ng-container *ngIf="isResolutionMessage(); else narrativeMessage">
               <label for="ResolutionTextField">Incident Resolution</label>
-              <input
+              <textarea
                 type="text"
                 class="form-control"
                 id="ResolutionTextField"
@@ -160,11 +171,11 @@
                 #narrative="ngModel"
                 [(ngModel)]="incident.Narrative"
                 required
-              />
+              ></textarea>
             </ng-container>
             <ng-template #narrativeMessage>
               <label for="NarrativeTextField">Incident Narrative</label>
-              <input
+              <textarea
                 type="text"
                 class="form-control"
                 id="NarrativeTextField"
@@ -173,36 +184,50 @@
                 #narrative="ngModel"
                 [(ngModel)]="incident.Narrative"
                 required
-              />
+              ></textarea>
             </ng-template>
           </div>
+        </ng-container>          
         </ng-container>
+        <br>
         <ng-container *ngIf="!isTicketClosed()">
           <button
             type="submit"
             class="btn btn-primary m-1"
-            [class.btn-warning]="editing"
-          >
+            style="background-color: burlywood; color: white; border-color: burlywood; width: 100px;">
             {{ editing ? "Save" : "Create" }}
           </button>
+          
           <button
             type="reset"
-            class="btn btn-secondary"
+            class="btn btn-secondary m-2"
             routerLink="/incidents"
+            style="width: 100px;"
           >
             Cancel
+          </button>
+          <button *ngIf="editing"
+            type="delete"
+            class="btn"
+            routerLink="/incidents"
+            style="width: 100px; border-color: burlywood; color: burlywood; background-color: white;"
+          >
+            Delete
           </button>
         </ng-container>
       </form>
     </div>
-    <ul class="col-md-offset-3 col-md-6 list-group">
+    <br>
+    <br>
+    <ul class="col-md-offset-3 col-md-12 list-group" style="margin-top: 40px;">
+      <h3>Status History</h3>
       <li class="list-group-item" *ngFor="let log of incident.LogHistory">
         <div>
-          <span class="badge text-bg-dark me-2">{{
+          <span style="color:gray; font-size: 13px;">{{
             log.Date | date : "yyyy-MM-dd"
           }}</span>
         </div>
-        <span class="badge text-bg-dark me-2">{{ log.User }}</span>
+        <span style="color:black; margin-right: 10px; font-size: 13px; font-weight: bold;">{{ log.User }}</span>
         <span class="badge" [ngClass]="getStatusCssClass(log.From)">{{
           log.From
         }}</span
