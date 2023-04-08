@@ -13,10 +13,8 @@ export class RestDataSource {
   auth_token!: string;
 
   constructor(private http: HttpClient) {
-    this.baseUrl = `${PROTOCOL}://${location.hostname}:${PORT}/api/`;
-    // this.baseUrl = `/api/`;
-    this.auth_token =
-      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0MjhmOTMzZDBlMTM1ODc4NGUyOGU1OCIsImRpc3BsYXlOYW1lIjoiTWF4d2VsIFNhbnRhbmEiLCJlbWFpbCI6Im1heHdlbHNhbnQ5NkBpY2xvdWQuY29tIiwiaWF0IjoxNjgwOTc2MDQ3LCJleHAiOjE2ODE1ODA4NDd9.8_QgGsIPpt8FIeKCJljW4b6vlAOiv2J8BmjibzFhY2U';
+    // this.baseUrl = `${PROTOCOL}://${location.hostname}:${PORT}/api/`;
+    this.baseUrl = `/api/`;
   }
   getIncidents(): Observable<Incident[]> {
     console.log('getIncidents', this.getOptions(), { token: this.auth_token });
