@@ -8,9 +8,36 @@
         [class.bg-primary]="!editing"
         [class.text-white]="!editing"
       >
-        <h5>{{ editing ? "Edit" : "Create" }} Product</h5>
+        <h5>{{ editing ? "Edit" : "Create" }} Incident</h5>
       </div>
-      <form novalidate #form="ngForm" (ngSubmit)="save(form)" *ngIf="incident">
+      <div
+        class="mt-2 p-2 text-center"
+        style="color: red; font-size: 15px"
+        *ngIf="errorMessage != null"
+      >
+        {{ errorMessage }}
+      </div>
+      <app-loading *ngIf="!showForm()"></app-loading>
+      <form
+        #form="ngForm"
+        (ngSubmit)="save(form)"
+        *ngIf="showForm()"
+        novalidate
+      >
+        <div class="form-group">
+          <label for="RecordNumberTextField">Record Number</label>
+          <input
+            *ngIf="editing"
+            type="text"
+            class="form-control"
+            id="RecordNumberTextField"
+            placeholder="Record Number"
+            name="recordNumber"
+            [value]="getRecordNumber()"
+            required
+            disabled
+          />
+        </div>
         <div class="form-group">
           <label for="TitleTextField">Title</label>
           <input
@@ -21,6 +48,7 @@
             name="title"
             [(ngModel)]="incident.Title"
             required
+            [disabled]="isTicketClosed()"
           />
         </div>
         <div class="form-group">
@@ -33,6 +61,7 @@
             name="description"
             [(ngModel)]="incident.Description"
             required
+            [disabled]="isTicketClosed()"
           />
         </div>
         <div class="form-group">
@@ -44,7 +73,8 @@
             placeholder="Incident Date"
             name="date"
             [(ngModel)]="incident.Date"
-          required
+            required
+            [disabled]="isTicketClosed()"
           />
         </div>
 
@@ -56,8 +86,9 @@
             name="severity"
             [(ngModel)]="incident.Severity"
             required
+            [disabled]="isTicketClosed()"
           >
-            <option selected value="Low">Low</option>
+            <option value="Low">Low</option>
             <option value="Medium">Medium</option>
             <option value="High">High</option>
           </select>
@@ -72,6 +103,7 @@
             name="reporter"
             [(ngModel)]="incident.Reporter"
             required
+            [disabled]="isTicketClosed()"
           />
         </div>
         <div class="form-group">
@@ -83,6 +115,7 @@
             placeholder="Incident Area"
             name="area"
             [(ngModel)]="incident.Area"
+            [disabled]="isTicketClosed()"
           />
         </div>
         <div class="form-group">
@@ -94,46 +127,93 @@
             placeholder="Incident Location"
             name="location"
             [(ngModel)]="incident.Location"
-            readonly
+            [disabled]="isTicketClosed()"
           />
         </div>
-        <div class="form-group">
-          <label for="StatusTextField">Status</label>
-          <input
-            type="text"
-            class="form-control"
-            id="StatusTextField"
-            placeholder="Incident Status"
-            name="status"
-            [(ngModel)]="incident.Status"
-            required
-          />
-        </div>
-
-        <div class="form-group">
-          <label for="NarrativeTextField">Incident Narrative</label>
-          <input
-            type="text"
-            class="form-control"
-            id="NarrativeTextField"
-            placeholder="Incident Narrative"
-            name="status"
-            [(ngModel)]="incident.Narrative"
-            required
-          />
-        </div>
-
-        <button
-          type="submit"
-          class="btn btn-primary m-1"
-          [class.btn-warning]="editing"
-        >
-          {{ editing ? "Save" : "Create" }}
-        </button>
-        <button type="reset" class="btn btn-secondary" routerLink="/incidents">
-          Cancel
-        </button>
+        <ng-container *ngIf="editing">
+          <div class="form-group">
+            <label for="StatusTextField">Status</label>
+            <select
+              class="form-control"
+              id="StatusTextField"
+              name="Status"
+              #Status="ngModel"
+              [(ngModel)]="incident.Status"
+              required
+              [disabled]="isTicketClosed()"
+            >
+              <option value="New">New</option>
+              <option value="In Progress">In Progress</option>
+              <option value="Dispatched">Dispatched</option>
+              <option value="Close">Close</option>
+            </select>
+          </div>
+          <div class="form-group" *ngIf="hasStatusChange()">
+            <ng-container *ngIf="isResolutionMessage(); else narrativeMessage">
+              <label for="ResolutionTextField">Incident Resolution</label>
+              <input
+                type="text"
+                class="form-control"
+                id="ResolutionTextField"
+                placeholder="Incident Resolution"
+                name="narrative"
+                #narrative="ngModel"
+                [(ngModel)]="incident.Narrative"
+                required
+              />
+            </ng-container>
+            <ng-template #narrativeMessage>
+              <label for="NarrativeTextField">Incident Narrative</label>
+              <input
+                type="text"
+                class="form-control"
+                id="NarrativeTextField"
+                placeholder="Incident Narrative"
+                name="narrative"
+                #narrative="ngModel"
+                [(ngModel)]="incident.Narrative"
+                required
+              />
+            </ng-template>
+          </div>
+        </ng-container>
+        <ng-container *ngIf="!isTicketClosed()">
+          <button
+            type="submit"
+            class="btn btn-primary m-1"
+            [class.btn-warning]="editing"
+          >
+            {{ editing ? "Save" : "Create" }}
+          </button>
+          <button
+            type="reset"
+            class="btn btn-secondary"
+            routerLink="/incidents"
+          >
+            Cancel
+          </button>
+        </ng-container>
       </form>
     </div>
+    <ul class="col-md-offset-3 col-md-6 list-group">
+      <li class="list-group-item" *ngFor="let log of incident.LogHistory">
+        <div>
+          <span class="badge text-bg-dark me-2">{{
+            log.Date | date : "yyyy-MM-dd"
+          }}</span>
+        </div>
+        <span class="badge text-bg-dark me-2">{{ log.User }}</span>
+        <span class="badge" [ngClass]="getStatusCssClass(log.From)">{{
+          log.From
+        }}</span
+        ><i class="fa-solid fa-arrow-right mx-2"></i
+        ><span class="badge" [ngClass]="getStatusCssClass(log.To)">{{
+          log.To
+        }}</span>
+        <p class="m-2">
+          {{ log.Narrative }}
+        </p>
+      </li>
+    </ul>
   </div>
 </div>

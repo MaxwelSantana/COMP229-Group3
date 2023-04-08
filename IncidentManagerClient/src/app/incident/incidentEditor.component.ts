@@ -11,6 +11,14 @@ import { RestDataSource } from '../model/rest.datasource';
 export class IncidentEditorComponent {
   editing: boolean = false;
   incident: Incident = new Incident();
+  errorMessage: string = '';
+  currentStatus?: string;
+  statusCssClass = {
+    New: 'text-bg-secondary',
+    'In Progress': 'text-bg-primary',
+    Dispatched: 'text-bg-warning',
+    Close: 'text-bg-success',
+  };
 
   constructor(
     private repository: IncidentRepository,
@@ -23,12 +31,54 @@ export class IncidentEditorComponent {
     if (this.editing) {
       dataSource
         .getIncident(activeRoute.snapshot.params['id'])
-        .subscribe((data) => (this.incident = data));
+        .subscribe((data) => {
+          this.incident = data;
+          this.currentStatus = this.incident.Status;
+          console.log(data);
+        });
     }
   }
 
   save(form: NgForm) {
-    this.repository.saveIncident(this.incident);
-    this.router.navigateByUrl('/incidents');
+    if (this.isTicketClosed()) {
+      this.errorMessage = 'Ticket Closed';
+      return;
+    }
+
+    if (form.valid) {
+      this.repository.saveIncident(this.incident);
+      this.router.navigateByUrl('/incidents');
+    } else {
+      this.errorMessage = 'Form Data Invalid';
+    }
+  }
+
+  isTicketClosed() {
+    return this.currentStatus == 'Close';
+  }
+
+  showForm() {
+    if (!this.editing) {
+      return true;
+    }
+    return !!this.incident._id;
+  }
+
+  getRecordNumber() {
+    return `#${this.incident.RecordNumber || ''}`;
+  }
+
+  hasStatusChange() {
+    return this.currentStatus != this.incident.Status;
+  }
+
+  isResolutionMessage() {
+    return this.incident.Status === 'Close';
+  }
+
+  getStatusCssClass(status?: string) {
+    if (!status) return;
+
+    return this.statusCssClass[status as keyof typeof this.statusCssClass];
   }
 }

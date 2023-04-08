@@ -1,3 +1,4 @@
+import { LogHistory } from './loghistory.model';
 export class Incident {
   constructor(
     public _id?: number,
@@ -11,5 +12,6 @@ export class Incident {
     public Severity?: string,
     public RecordNumber?: string,
     public Narrative?: string,
+    public LogHistory?: Array<LogHistory>
   ) {}
 }
