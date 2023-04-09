@@ -1,96 +1,109 @@
 <div class="container">
-  <div class="row mt-2">
-    <h1>Dashboard</h1>
-    <h3>Incidents</h3>
-    <div>
-      <button type="reset" class="btn btn-primary" routerLink="/incidents/add">
-        <i class="fa fa-plus"></i> Add an incident
+  <div class="row mt-2" >
+    <div class = "p-2 text-center text-white" style="background-color: burlywood; width: 100%">
+      <h3 style="color: white;
+      text-shadow: 0 1px 6px rgba(81, 81, 81, 0.5);
+      text-align: center;
+      font-size: 30px;">Dashboard</h3>
+    </div>
+    <div style="padding: 10px">
+      <button type="reset" class="btn" style="background-color: burlywood;color:white;position:static; right: 0;" routerLink="/incidents/add">
+        <i class="fa fa-plus" style="color:white;"></i> Add an incident
       </button>
-      <div class="form-check">
+      <div class="form-check" style="margin-top: 40px;">
         <input
           class="form-check-input"
           type="checkbox"
           [(ngModel)]="showResolvedIncidents"
           id="flexCheckDefault"
+          
         />
-        <label class="form-check-label" for="flexCheckDefault">
+        <label class="form-check-label"  for="flexCheckDefault" style="font-size: 12px;">
           Show Resolved Incidents
         </label>
       </div>
     </div>
-    <br />
-    <table class="table table-bordered table-striped table-hover">
+    <br>
+    <br>
+    <table class="table table-bordered table-striped table-hover" style="margin-top: 3px;">
       <thead>
         <tr>
-          <th>Title</th>
-          <th class="text-center">Record Number</th>
-          <th class="text-center">Description</th>
-          <th class="text-center">Date</th>
-          <th class="text-center">Status</th>
-          <th class="text-center">Severity</th>
-          <th class="text-center">Reporter</th>
-          <th class="text-center">Area</th>
-          <th class="text-center">Location</th>
+          <th style="font-size: 14px; font-weight: bold;">Incident</th>
+          <th class="text-center" style="font-size: 14px; font-weight: bold;">Record Number</th>
+          <th class="text-center" style="font-size: 14px; font-weight: bold;">Description</th>
+          <th class="text-center" style="font-size: 14px; font-weight: bold;">Date</th>
+          <th class="text-center" style="font-size: 14px; font-weight: bold;">Status</th>
+          <th class="text-center" style="font-size: 14px; font-weight: bold;">Severity</th>
+          <th class="text-center" style="font-size: 14px; font-weight: bold;">Reporter</th>
+          <th class="text-center" style="font-size: 14px; font-weight: bold;">Area</th>
+          <th class="text-center" style="font-size: 14px; font-weight: bold;">Location</th>
         </tr>
       </thead>
       <tbody>
         <tr *ngFor="let incident of getIncidents()">
           <td class="text-center">
-            <a href="#" [routerLink]="['/incidents/edit', incident._id]">
+            <a href="#" [routerLink]="['/incidents/edit', incident._id]" style="font-size: 14px; font-weight: normal;">
               {{ getRecordNumber(incident) }}
             </a>
           </td>
-          <td>
+          <td style="font-size: 14px; font-weight: normal;">
             {{ incident.Title }}
           </td>
-          <td class="text-center">{{ incident.Description }}</td>
-          <td class="text-center">
+          <td class="text-center" style="font-size: 14px; font-weight: normal;">
+            {{ incident.Description }}</td>
+          <td class="text-center" style="font-size: 14px; font-weight: normal;">
             {{ incident.Date | date : "yyyy-MM-dd" }}
           </td>
-          <td class="text-center">{{ incident.Status }}</td>
-          <td class="text-center">{{ incident.Severity }}</td>
-          <td class="text-center">{{ incident.Reporter }}</td>
-          <td class="text-center">{{ incident.Area }}</td>
-          <td class="text-center">{{ incident.Location }}</td>
+          <td class="text-center" style="font-size: 14px; font-weight: normal;">{{ incident.Status }}</td>
+          <td class="text-center" style="font-size: 14px; font-weight: normal;">{{ incident.Severity }}</td>
+          <td class="text-center" style="font-size: 14px; font-weight: normal;">{{ incident.Reporter }}</td>
+          <td class="text-center" style="font-size: 14px; font-weight: normal;">{{ incident.Area }}</td>
+          <td class="text-center" style="font-size: 14px; font-weight: normal;">{{ incident.Location }}</td>
         </tr>
       </tbody>
     </table>
 
     <ng-container *ngIf="showResolvedIncidents">
-      <h4>Resolved Incidents</h4>
+      <h4 style="padding-top: 20px; font-weight: bold; ">Resolved Incidents</h4>
       <table class="table table-bordered table-striped table-hover">
         <thead>
           <tr>
-            <th>Title</th>
-            <th class="text-center">Record Number</th>
-            <th class="text-center">Description</th>
-            <th class="text-center">Date</th>
-            <th class="text-center">Status</th>
-            <th class="text-center">Severity</th>
-            <th class="text-center">Reporter</th>
-            <th class="text-center">Area</th>
-            <th class="text-center">Location</th>
+            <th style="font-size: 14px; font-weight: bold;">Incident</th>
+            <th class="text-center" style="font-size: 14px; font-weight: bold;">Record Number</th>
+            <th class="text-center" style="font-size: 14px; font-weight: bold;">Description</th>
+            <th class="text-center" style="font-size: 14px; font-weight: bold;">Date</th>
+            <th class="text-center" style="font-size: 14px; font-weight: bold;">Status</th>
+            <th class="text-center" style="font-size: 14px; font-weight: bold;">Severity</th>
+            <th class="text-center" style="font-size: 14px; font-weight: bold;">Reporter</th>
+            <th class="text-center" style="font-size: 14px; font-weight: bold;">Area</th>
+            <th class="text-center" style="font-size: 14px; font-weight: bold;">Location</th>
           </tr>
         </thead>
         <tbody>
           <tr *ngFor="let incident of getResolvedIncidents()">
             <td class="text-center">
-              <a href="#" [routerLink]="['/incidents/edit', incident._id]">
+              <a href="#" [routerLink]="['/incidents/edit', incident._id]" style="font-size: 14px; font-weight: normal;">
                 {{ getRecordNumber(incident) }}
               </a>
             </td>
-            <td>
+            <td style="font-size: 14px; font-weight: normal;">
               {{ incident.Title }}
             </td>
-            <td class="text-center">{{ incident.Description }}</td>
-            <td class="text-center">
+            <td class="text-center" style="font-size: 14px; font-weight: normal;">
+              {{ incident.Description }}</td>
+            <td class="text-center" style="font-size: 14px; font-weight: normal;">
               {{ incident.Date | date : "yyyy-MM-dd" }}
             </td>
-            <td class="text-center">{{ incident.Status }}</td>
-            <td class="text-center">{{ incident.Severity }}</td>
-            <td class="text-center">{{ incident.Reporter }}</td>
-            <td class="text-center">{{ incident.Area }}</td>
-            <td class="text-center">{{ incident.Location }}</td>
+            <td class="text-center" style="font-size: 14px; font-weight: normal;">
+              {{ incident.Status }}</td>
+            <td class="text-center" style="font-size: 14px; font-weight: normal;">
+              {{ incident.Severity }}</td>
+            <td class="text-center" style="font-size: 14px; font-weight: normal;">
+              {{ incident.Reporter }}</td>
+            <td class="text-center" style="font-size: 14px; font-weight: normal;">
+              {{ incident.Area }}</td>
+            <td class="text-center" style="font-size: 14px; font-weight: normal;">
+              {{ incident.Location }}</td>
           </tr>
         </tbody>
       </table>

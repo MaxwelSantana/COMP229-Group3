@@ -81,4 +81,8 @@ export class IncidentEditorComponent {
 
     return this.statusCssClass[status as keyof typeof this.statusCssClass];
   }
+  deleteIncident(incidentId?: number): void {
+    if (!incidentId) return;
+    this.repository.deleteIncident(incidentId);
+  }
 }
