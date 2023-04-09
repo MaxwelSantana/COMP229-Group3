@@ -1,7 +1,8 @@
 <nav class="navbar navbar-expand-sm navbar-dark bg-dark">
   <div class="container-fluid">
-    <a class="navbar-brand" href="#">
-      <img
+    <a class="navbar-brand" routerLink="/home"
+    style="font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; font-size: 20px">
+    <img
         src="\Assets\images\logo.png"
         alt="Logo"
         width="30"
@@ -19,7 +20,7 @@
     >
       <span class="navbar-toggler-icon"></span>
     </button>
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <div class="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
       <ul class="navbar-nav ml-auto">
         <li class="nav-item">
           <a
@@ -27,7 +28,8 @@
             aria-current="page"
             routerLink="/home"
             routerLinkActive="active"
-            ><i class="fa fa-home fa-lg"></i> Home</a
+            style="font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;"
+           ><i class="fa fa-home fa-lg"></i> Home</a
           >
         </li>
 
@@ -37,11 +39,13 @@
               class="nav-link"
               routerLink="/incidents"
               routerLinkActive="active"
+              style="font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;"
               ><i class="fa fa-book fa-lg"></i> Incident List</a
             >
           </li>
           <li class="nav-item">
             <a class="nav-link" (click)="logout()"
+            style="font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;"
               ><i class="fa fa-book fa-lg"></i> Logout</a
             >
           </li>
@@ -49,6 +53,7 @@
         <ng-template #loginLink>
           <li class="nav-item">
             <a class="nav-link" routerLink="/login" routerLinkActive="active"
+            style="font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;"
               ><i class="fa fa-book fa-lg"></i> Login</a
             >
           </li>
