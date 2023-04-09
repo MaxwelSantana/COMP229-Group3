@@ -21,11 +21,6 @@ export class IncidentTableComponent {
       .filter((incident) => incident.Status == 'Close');
   }
 
-  deleteProduct(incidentId?: number): void {
-    if (!incidentId) return;
-    this.repository.deleteProduct(incidentId);
-  }
-
   getRecordNumber(incident: Incident) {
     if (!incident.RecordNumber) return '#';
     return `#${incident.RecordNumber}`;

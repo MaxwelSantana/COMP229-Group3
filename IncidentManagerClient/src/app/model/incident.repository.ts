@@ -61,7 +61,7 @@ export class IncidentRepository {
     }
   }
 
-  deleteProduct(id: number) {
+  deleteIncident(id: number) {
     this.dataSource.deleteIncident(id).subscribe((p) => {
       this.incidents.splice(
         this.incidents.findIndex((p) => p._id == id),

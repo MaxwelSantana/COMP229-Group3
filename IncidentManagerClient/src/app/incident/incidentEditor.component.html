@@ -208,6 +208,7 @@
           </button>
           <button *ngIf="editing"
             type="delete"
+            (click)="deleteIncident(incident._id)"
             class="btn"
             routerLink="/incidents"
             style="width: 100px; border-color: burlywood; color: burlywood; background-color: white;"
@@ -220,7 +221,7 @@
     <br>
     <br>
     <ul class="col-md-offset-3 col-md-12 list-group" style="margin-top: 40px;">
-      <h3>Status History</h3>
+      <h3 *ngFor="let log of incident.LogHistory">Status History</h3>
       <li class="list-group-item" *ngFor="let log of incident.LogHistory">
         <div>
           <span style="color:gray; font-size: 13px;">{{
