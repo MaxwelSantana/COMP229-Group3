@@ -28,8 +28,8 @@
     <table class="table table-bordered table-striped table-hover" style="margin-top: 3px;">
       <thead>
         <tr>
-          <th style="font-size: 14px; font-weight: bold;">Incident</th>
-          <th class="text-center" style="font-size: 14px; font-weight: bold;">Record Number</th>
+          <th class="text-center" style="font-size: 14px; font-weight: bold;">Incident Record Number</th>
+          <th class="text-center" style="font-size: 14px; font-weight: bold;">Title</th>
           <th class="text-center" style="font-size: 14px; font-weight: bold;">Description</th>
           <th class="text-center" style="font-size: 14px; font-weight: bold;">Date</th>
           <th class="text-center" style="font-size: 14px; font-weight: bold;">Status</th>
@@ -52,7 +52,7 @@
           <td class="text-center" style="font-size: 14px; font-weight: normal;">
             {{ incident.Description }}</td>
           <td class="text-center" style="font-size: 14px; font-weight: normal;">
-            {{ incident.Date | date : "yyyy-MM-dd" }}
+            {{ incident.Date | date : "yyyy-MM-dd" : "+0000" }}
           </td>
           <td class="text-center" style="font-size: 14px; font-weight: normal;">{{ incident.Status }}</td>
           <td class="text-center" style="font-size: 14px; font-weight: normal;">{{ incident.Severity }}</td>
@@ -68,8 +68,8 @@
       <table class="table table-bordered table-striped table-hover">
         <thead>
           <tr>
-            <th style="font-size: 14px; font-weight: bold;">Incident</th>
-            <th class="text-center" style="font-size: 14px; font-weight: bold;">Record Number</th>
+            <th class="text-center" style="font-size: 14px; font-weight: bold;">Incident Record Number</th>
+            <th class="text-center" style="font-size: 14px; font-weight: bold;">Title</th>
             <th class="text-center" style="font-size: 14px; font-weight: bold;">Description</th>
             <th class="text-center" style="font-size: 14px; font-weight: bold;">Date</th>
             <th class="text-center" style="font-size: 14px; font-weight: bold;">Status</th>
@@ -92,7 +92,7 @@
             <td class="text-center" style="font-size: 14px; font-weight: normal;">
               {{ incident.Description }}</td>
             <td class="text-center" style="font-size: 14px; font-weight: normal;">
-              {{ incident.Date | date : "yyyy-MM-dd" }}
+              {{ incident.Date | date : "yyyy-MM-dd" : "+0000" }}
             </td>
             <td class="text-center" style="font-size: 14px; font-weight: normal;">
               {{ incident.Status }}</td>

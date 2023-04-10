@@ -56,7 +56,6 @@ router.post('/', async (req, res, next) => {
   let currentDate = new Date();
   let incidentDate = `${currentDate.getDate().toString().padStart(2, '0')}${(currentDate.getMonth() + 1).toString().padStart(2, '0')}${currentDate.getFullYear().toString().substr(-2)}`;
 
-
   let lastIncident = await Incident.findOne().sort({ $natural: -1 }).exec();
   let lastIncidentNumber = lastIncident ? await Incident.countDocuments() : 0;
 
