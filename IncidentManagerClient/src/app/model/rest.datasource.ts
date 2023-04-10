@@ -7,11 +7,12 @@ import { HttpHeaders } from '@angular/common/http';
 
 const PROTOCOL = 'http';
 const PORT = 3000;
+
 @Injectable()
 export class RestDataSource {
   baseUrl: string;
   auth_token!: string;
-
+ 
   constructor(private http: HttpClient) {
     //this.baseUrl = `${PROTOCOL}://${location.hostname}:${PORT}/api/`;
     this.baseUrl = `/api/`;
@@ -77,10 +78,17 @@ export class RestDataSource {
     );
   }
   deleteIncident(id: number): Observable<number> {
-    return this.http.delete<number>(
-      `${this.baseUrl}incidents/${id}`,
+    if (confirm('Are you sure to delete incident?') === true) {
+      return this.http.delete<number>(
+        `${this.baseUrl}incidents/${id}`,
+        this.getOptions()
+      );
+    }
+   else{
+    return this.http.post<number>(
+      `${this.baseUrl}/incidents${id}`,
       this.getOptions()
-    );
+    );}
   }
   private getOptions() {
     return {
